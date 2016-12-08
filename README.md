@@ -4,7 +4,7 @@
 
 This library consists of a set of generic classes that can be used to create card games.
 
-
+Example of use : [BlackJack Java](https://github.com/Heziode-dev/BlackJack-Java)
 
 ## How does it work ?
 

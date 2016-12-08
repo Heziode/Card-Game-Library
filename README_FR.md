@@ -4,6 +4,8 @@ Cette librairie regroupe un ensemble de classes génériques pouvant être utili
 
 
 
+Exemple d'utilisation : [BlackJack Java](https://github.com/Heziode-dev/BlackJack-Java)
+
 ## Comment cela fonctionne ?
 
 C'est simple, la librairie a entièrement été écrite en utilisant des génériques. Un ensemble de classes prêtes à l'emploi sont disponibles et sont préfixées par **Simple**, elle constitue un jeu de 52 cartes.
