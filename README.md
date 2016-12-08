@@ -1,6 +1,6 @@
 # Card Game Library
 
->   [version française du README](https://github.com/Heziode-dev/Card-Game-Library/README_FR.md)
+>   [version française du README](https://github.com/Heziode-dev/Card-Game-Library/blob/master/README_FR.md)
 
 This library consists of a set of generic classes that can be used to create card games.
 
