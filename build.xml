@@ -1,0 +1,94 @@
+<project name="cardGameBaseLibrary" default="run" basedir="">
+    <!--
+     ==================== Jar options ===========================
+    -->
+    <property name="lib.name" value="cardGameBase"/>
+    <property name="lib.version" value="2.0.0"/>
+    <property name="lib.fullname" value="${lib.name}-${lib.version}"/>
+    <!--
+     ==================== Home options ===========================
+    -->
+    <property name="build-lib.home" value="${basedir}/build-lib"/>
+    <property name="dist.home" value="${basedir}/dist"/>
+    <property name="docs.home" value="${basedir}/docs"/>
+    <property name="src.home" value="${basedir}/src"/>
+    <property name="src-lib.home" value="${src.home}/_CardGameBase"/>
+    <!--
+     ==================== Other options ===========================
+    -->
+    <property name="main-class"  value="fr.unicaen.info.l3.blackjack.controller.Main"/>
+    <property name="javac.version" value="1.8"/>
+    <property name="javac.encoding" value="UTF-8"/>
+    <!--
+     ==================== Compile options ===========================
+    -->
+    <property name="compile.debug" value="true"/>
+    <property name="compile.deprecation" value="false"/>
+    <property name="compile.optimize" value="true"/>
+    <!--
+     ==================== All Target ======================================
+    -->
+    <target name="all" depends="clean" description="Clean build and dist directories, then compile"/>
+    <!--
+     ==================== Clean Target ====================================
+    -->
+    <target name="clean" description="Delete old build and dist directories">
+        <delete dir="${build-lib.home}"/>
+        <delete dir="${dist.home}"/>
+    </target>
+    <!--
+     ==================== Clean Target After Build ====================================
+    -->
+    <target name="clean-after-build" description="Delete all build files">
+        <delete dir="${build-lib.home}"/>
+    </target>
+    <!--
+    ===================== Compile Lib Target ==============================
+    -->
+    <target name="compile-lib" depends="prepare-lib" description="Compile Java sources of lib">
+        <javac srcdir="${src-lib.home}" destdir="${build-lib.home}" debug="${compile.debug}"
+               deprecation="${compile.deprecation}" optimize="${compile.optimize}" source="${javac.version}"
+               encoding="${javac.encoding}" includeantruntime="false">
+            <compilerarg value="-Xlint"/>
+        </javac>
+        <!--  Copy application resources  -->
+        <copy todir="${build-lib.home}">
+            <fileset dir="${src-lib.home}" excludes="**/*.java"/>
+        </copy>
+    </target>
+    <!--
+     ==================== Prepare lib Target ==================================
+    -->
+    <target name="prepare-lib">
+        <mkdir dir="${build-lib.home}"/>
+        <mkdir dir="${dist.home}"/>
+    </target>
+    <!--
+     ==================== Dist Target =====================================
+    -->
+    <target name="dist-lib" depends="clean,compile-lib" description="Create binary distribution">
+        <copy todir="${dist.home}">
+            <fileset dir="${dist.home}"/>
+        </copy>
+        <!--  Create application JAR file  -->
+        <jar destfile="${dist.home}/${lib.fullname}.jar" basedir="${build-lib.home}"/>
+    </target>
+    <!--
+     ==================== Javadoc Target Lib ==================================
+    -->
+    <target name="javadoc-lib" depends="compile-lib" description="Create Javadoc API documentation">
+        <mkdir dir="${dist.home}/docs/api"/>
+        <javadoc sourcepath="${src-lib.home}" destdir="${dist.home}/docs/api" packagenames="*">
+            <classpath>
+                <fileset dir="${dist.home}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javadoc>
+    </target>
+    <!--
+     ==================== Run Target ==================================
+    -->
+    <target name="run" depends="dist-lib,clean-after-build">
+    </target>
+</project>
